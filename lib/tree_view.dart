@@ -32,6 +32,13 @@ class TreeView extends StatelessWidget {
   }
 }
 
+/// # Parent widget
+///
+/// The [Parent] widget holds the [Parent.parent] widget and
+/// [Parent.childWidget] which is a [List] of child widgets.
+///
+/// The [Parent] widget is wrapped around a [Column]. The [Parent.childWidget]
+/// is collapsed by default. When clicked the child widget is expanded.
 class Parent extends StatefulWidget {
   final Widget parent;
   final ChildList childWidget;
@@ -64,6 +71,7 @@ class _ParentState extends State<Parent> {
         InkWell(
           child: widget.parent,
           onTap: () {
+            print('Clicked');
             setState(() {
               _isSelected = _toggleBool(_isSelected);
             });
@@ -79,15 +87,14 @@ class _ParentState extends State<Parent> {
   }
 
   Widget _getChild() {
-    return _isSelected
-        ? Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-            child: widget.childWidget,
-          )
-        : Container();
+    return _isSelected ? widget.childWidget : Container();
   }
 }
 
+/// # ChildList widget
+///
+/// The [ChildList] widget holds a [List] of widget which will be displayed as
+/// children of the [Parent] widget
 class ChildList extends StatelessWidget {
   final List<Widget> children;
   final MainAxisAlignment mainAxisAlignment;

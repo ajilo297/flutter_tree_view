@@ -1,6 +1,6 @@
-# tree_view
+# Tree View
 
-A new Flutter package for a fully customisable tree view
+A Flutter package for a fully customisable tree view
 
 ## Getting Started
 

@@ -14,7 +14,7 @@ void main() {
           parentList: [
             Parent(
               parent: _getCardWrapper(child: Text('P1')),
-              childWidget: ChildList(
+              childList: ChildList(
                 children: <Widget>[
                   _getCardWrapper(child: Text('C11')),
                   _getCardWrapper(child: Text('C12')),
@@ -24,7 +24,7 @@ void main() {
             ),
             Parent(
               parent: _getCardWrapper(child: Text('P2')),
-              childWidget: ChildList(
+              childList: ChildList(
                 children: <Widget>[
                   _getCardWrapper(child: Text('C21')),
                   _getCardWrapper(child: Text('C22')),

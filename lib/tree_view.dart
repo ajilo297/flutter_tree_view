@@ -3,6 +3,8 @@ library tree_view;
 
 import 'package:flutter/material.dart';
 
+typedef void ParentSelectChanged(bool isSelected);
+
 /// # Tree View
 ///
 /// Creates a tree view widget. The widget is a List View with a [List] of
@@ -35,30 +37,34 @@ class TreeView extends StatelessWidget {
 /// # Parent widget
 ///
 /// The [Parent] widget holds the [Parent.parent] widget and
-/// [Parent.childWidget] which is a [List] of child widgets.
+/// [Parent.childList] which is a [List] of child widgets.
 ///
-/// The [Parent] widget is wrapped around a [Column]. The [Parent.childWidget]
+/// The [Parent] widget is wrapped around a [Column]. The [Parent.childList]
 /// is collapsed by default. When clicked the child widget is expanded.
 class Parent extends StatefulWidget {
   final Widget parent;
-  final ChildList childWidget;
+  final ChildList childList;
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
   final MainAxisAlignment mainAxisAlignment;
+  final ParentSelectChanged callback;
+  final Key key;
 
   Parent({
     @required this.parent,
-    @required this.childWidget,
+    @required this.childList,
     this.mainAxisAlignment = MainAxisAlignment.center,
     this.crossAxisAlignment = CrossAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.min,
+    this.callback,
+    this.key,
   });
 
   @override
-  _ParentState createState() => _ParentState();
+  ParentState createState() => ParentState();
 }
 
-class _ParentState extends State<Parent> {
+class ParentState extends State<Parent> {
   bool _isSelected = false;
 
   @override
@@ -68,18 +74,20 @@ class _ParentState extends State<Parent> {
       crossAxisAlignment: widget.crossAxisAlignment,
       mainAxisAlignment: widget.mainAxisAlignment,
       children: <Widget>[
-        InkWell(
+        GestureDetector(
           child: widget.parent,
-          onTap: () {
-            print('Clicked');
-            setState(() {
-              _isSelected = _toggleBool(_isSelected);
-            });
-          },
+          onTap: expand,
         ),
         _getChild(),
       ],
     );
+  }
+
+  void expand() {
+    if (widget.callback != null) widget.callback(_isSelected);
+    setState(() {
+      _isSelected = _toggleBool(_isSelected);
+    });
   }
 
   bool _toggleBool(bool b) {
@@ -87,7 +95,7 @@ class _ParentState extends State<Parent> {
   }
 
   Widget _getChild() {
-    return _isSelected ? widget.childWidget : Container();
+    return _isSelected ? widget.childList : Container();
   }
 }
 

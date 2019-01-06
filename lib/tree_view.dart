@@ -3,6 +3,8 @@ library tree_view;
 
 import 'package:flutter/material.dart';
 
+typedef void ParentSelectChanged(bool isSelected);
+
 /// # Tree View
 ///
 /// Creates a tree view widget. The widget is a List View with a [List] of
@@ -45,6 +47,7 @@ class Parent extends StatefulWidget {
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
   final MainAxisAlignment mainAxisAlignment;
+  final ParentSelectChanged callback;
 
   Parent({
     @required this.parent,
@@ -52,6 +55,7 @@ class Parent extends StatefulWidget {
     this.mainAxisAlignment = MainAxisAlignment.center,
     this.crossAxisAlignment = CrossAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.min,
+    this.callback,
   });
 
   @override
@@ -71,7 +75,7 @@ class _ParentState extends State<Parent> {
         InkWell(
           child: widget.parent,
           onTap: () {
-            print('Clicked');
+            widget.callback(_isSelected);
             setState(() {
               _isSelected = _toggleBool(_isSelected);
             });

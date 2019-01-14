@@ -1,10 +1,7 @@
+[![CircleCI](https://circleci.com/gh/ajilo297/flutter_tree_view.svg?style=svg)](https://circleci.com/gh/ajilo297/flutter_tree_view)
+
 # Tree View
-
 A Flutter package for a fully customisable tree view
-
-
-
-<!--<a href="https://imgur.com/d4n4p1b"><img src="https://i.imgur.com/d4n4p1b.gif" title="source: imgur.com" /></a>-->
 
 ### Example
 

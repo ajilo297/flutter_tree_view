@@ -1,5 +1,5 @@
 [![pub package](https://img.shields.io/pub/v/http.svg)](https://pub.dartlang.org/packages/tree_view)
-[![CircleCI](https://circleci.com/gh/ajilo297/flutter_tree_view.svg?style=svg)](https://circleci.com/gh/ajilo297/flutter_tree_view)
+[![Build Status](https://travis-ci.org/ajilo297/flutter_tree_view.svg?branch=master)](https://travis-ci.org/ajilo297/flutter_tree_view)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # Tree View

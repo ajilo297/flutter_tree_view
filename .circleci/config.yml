@@ -9,6 +9,5 @@ jobs:
       - checkout
       - codecov/upload:
           file: {{ coverage }}
-          token: 9350fc27-28b7-44b0-a2bb-623054fb62cf
       - run: flutter doctor
       - run: flutter test --coverage

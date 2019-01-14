@@ -160,30 +160,4 @@ class _HomePageState extends State<HomePage> {
         fileName: document.name,
         lastModified: document.dateModified,
       );
-
-  Widget test() {
-    var treeView = TreeView(
-      parentList: [
-        Parent(
-          parent: Text('Desktop'),
-          childList: ChildList(
-            children: <Widget>[
-              Parent(
-                parent: Text('documents'),
-                childList: ChildList(
-                  children: <Widget>[
-                    Text('Resume.docx'),
-                    Text('Billing-Info.docx'),
-                  ],
-                ),
-              ),
-              Text('MeetingReport.xls'),
-              Text('MeetingReport.pdf'),
-              Text('Demo.zip'),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
 }

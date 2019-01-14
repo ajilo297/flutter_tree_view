@@ -2,8 +2,8 @@ version: 2
 jobs:
   build:
     docker:
-      -image: cirrusci/flutter
+      - image: cirrusci/flutter
     steps:
       - checkout
-      - run: flutter doctor -v
-      - run: flutter test --machine
+      - run: flutter doctor
+      - run: flutter test

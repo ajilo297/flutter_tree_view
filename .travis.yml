@@ -11,10 +11,8 @@ addons:
 before_script:
   - git clone https://github.com/flutter/flutter.git -b stable
   - ./flutter/bin/flutter doctor -v
-jobs:
-  include:
-    - stage: Test
-    script: ./flutter/bin/flutter test --machine
+script:
+  - ./flutter/bin/flutter test --machine
 cache:
   directories:
     - $HOME/.pub-cache

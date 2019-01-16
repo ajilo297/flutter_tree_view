@@ -1,9 +1,22 @@
-[![pub package](https://img.shields.io/badge/pub-0.0.4-green.svg)](https://pub.dartlang.org/packages/tree_view)
+[![pub package](https://img.shields.io/badge/pub-0.0.5-green.svg)](https://pub.dartlang.org/packages/tree_view)
 [![Build Status](https://travis-ci.org/ajilo297/flutter_tree_view.svg?branch=master)](https://travis-ci.org/ajilo297/flutter_tree_view)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # Tree View
 A Flutter package for a fully customisable tree view
+
+### Installing
+Add this to your `pubspec.yaml` file
+
+```yaml
+dependencies:
+  tree_view: ^0.0.5
+```
+
+And run 
+```sh
+flutter packages get
+```
 
 ### Example
 

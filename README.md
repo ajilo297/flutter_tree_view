@@ -1,4 +1,4 @@
-[![pub package](https://img.shields.io/badge/pub-0.0.5-green.svg)](https://pub.dartlang.org/packages/tree_view)
+[![pub package](https://img.shields.io/badge/pub-0.0.5-orange.svg)](https://pub.dartlang.org/packages/tree_view)
 [![Build Status](https://travis-ci.org/ajilo297/flutter_tree_view.svg?branch=master)](https://travis-ci.org/ajilo297/flutter_tree_view)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 

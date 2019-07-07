@@ -2,127 +2,132 @@
 library tree_view;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
-typedef void ParentSelectChanged(bool isSelected);
-
-/// # Tree View
-///
-/// Creates a tree view widget. The widget is a List View with a [List] of
-/// [Parent] widgets. The [TreeView] is nested inside a [Scrollbar] if the
-/// [TreeView.hasScrollBar] property is true.
-class TreeView extends StatelessWidget {
-  final List<Parent> parentList;
-  final bool hasScrollBar;
+class TreeView extends InheritedWidget {
+  final List<TreeViewChild> children;
+  final bool startExpanded;
 
   TreeView({
-    this.parentList = const <Parent>[],
-    this.hasScrollBar = false,
+    Key key,
+    @required List<TreeViewChild> children,
+    bool startExpanded = false,
+  })  : this.children = children,
+        this.startExpanded = startExpanded,
+        super(
+          key: key,
+          child: TreeViewData(
+            children: children,
+          ),
+        );
+
+  static TreeView of(BuildContext context) {
+    return context.inheritFromWidgetOfExactType(TreeView);
+  }
+
+  @override
+  bool updateShouldNotify(TreeView oldWidget) {
+    if (oldWidget.children == this.children &&
+        oldWidget.startExpanded == this.startExpanded) {
+      return false;
+    }
+    return true;
+  }
+}
+
+class TreeViewData extends StatelessWidget {
+  final List<TreeViewChild> children;
+
+  const TreeViewData({
+    this.children,
   });
 
   @override
   Widget build(BuildContext context) {
-    return hasScrollBar ? Scrollbar(child: _getTreeList()) : _getTreeList();
-  }
-
-  Widget _getTreeList() {
     return ListView.builder(
+      itemCount: children.length,
       itemBuilder: (context, index) {
-        return parentList[index];
+        return children.elementAt(index);
       },
-      itemCount: parentList.length,
     );
   }
 }
 
-/// # Parent widget
-///
-/// The [Parent] widget holds the [Parent.parent] widget and
-/// [Parent.childList] which is a [List] of child widgets.
-///
-/// The [Parent] widget is wrapped around a [Column]. The [Parent.childList]
-/// is collapsed by default. When clicked the child widget is expanded.
-class Parent extends StatefulWidget {
+class TreeViewChild extends StatefulWidget {
+  final bool startExpanded;
   final Widget parent;
-  final ChildList childList;
-  final MainAxisSize mainAxisSize;
-  final CrossAxisAlignment crossAxisAlignment;
-  final MainAxisAlignment mainAxisAlignment;
-  final ParentSelectChanged callback;
-  final Key key;
+  final List<Widget> children;
+  final VoidCallback onTap;
 
-  Parent({
+  TreeViewChild({
     @required this.parent,
-    @required this.childList,
-    this.mainAxisAlignment = MainAxisAlignment.center,
-    this.crossAxisAlignment = CrossAxisAlignment.start,
-    this.mainAxisSize = MainAxisSize.min,
-    this.callback,
-    this.key,
-  });
+    @required this.children,
+    this.startExpanded,
+    this.onTap,
+    Key key,
+  }) : super(key: key) {
+    assert(parent != null);
+    assert(children != null);
+  }
 
   @override
-  ParentState createState() => ParentState();
+  _TreeViewChildState createState() => _TreeViewChildState();
+
+  TreeViewChild copyWith(
+    TreeViewChild source, {
+    bool startExpanded,
+    Widget parent,
+    List<Widget> children,
+    VoidCallback onTap,
+  }) {
+    return TreeViewChild(
+      parent: parent ?? source.parent,
+      children: children ?? source.children,
+      startExpanded: startExpanded ?? source.startExpanded,
+      onTap: onTap ?? source.onTap,
+    );
+  }
 }
 
-class ParentState extends State<Parent> {
-  bool _isSelected = false;
+class _TreeViewChildState extends State<TreeViewChild> {
+  bool isExpanded;
+
+  @override
+  void initState() {
+    super.initState();
+    isExpanded = widget.startExpanded;
+  }
+
+  @override
+  void didChangeDependencies() {
+    isExpanded = widget.startExpanded ?? TreeView.of(context).startExpanded;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: widget.mainAxisSize,
-      crossAxisAlignment: widget.crossAxisAlignment,
-      mainAxisAlignment: widget.mainAxisAlignment,
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         GestureDetector(
           child: widget.parent,
-          onTap: expand,
+          onTap: widget.onTap ??
+              () {
+                setState(() {
+                  isExpanded = !isExpanded;
+                });
+              },
         ),
-        _getChild(),
+        AnimatedContainer(
+          duration: Duration(milliseconds: 400),
+          child: isExpanded
+              ? Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: widget.children,
+                )
+              : Offstage(),
+        ),
       ],
-    );
-  }
-
-  void expand() {
-    if (widget.callback != null) widget.callback(_isSelected);
-    setState(() {
-      _isSelected = _toggleBool(_isSelected);
-    });
-  }
-
-  bool _toggleBool(bool b) {
-    return b ? false : true;
-  }
-
-  Widget _getChild() {
-    return _isSelected ? widget.childList : Container();
-  }
-}
-
-/// # ChildList widget
-///
-/// The [ChildList] widget holds a [List] of widget which will be displayed as
-/// children of the [Parent] widget
-class ChildList extends StatelessWidget {
-  final List<Widget> children;
-  final MainAxisAlignment mainAxisAlignment;
-  final CrossAxisAlignment crossAxisAlignment;
-  final MainAxisSize mainAxisSize;
-
-  ChildList({
-    this.children = const <Widget>[],
-    this.mainAxisSize = MainAxisSize.min,
-    this.crossAxisAlignment = CrossAxisAlignment.start,
-    this.mainAxisAlignment = MainAxisAlignment.center,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: mainAxisAlignment,
-      crossAxisAlignment: crossAxisAlignment,
-      mainAxisSize: mainAxisSize,
-      children: children,
     );
   }
 }

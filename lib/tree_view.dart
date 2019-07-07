@@ -5,18 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 class TreeView extends InheritedWidget {
-  final List<TreeViewChild> children;
+  final List<Widget> children;
   final bool startExpanded;
 
   TreeView({
     Key key,
-    @required List<TreeViewChild> children,
+    @required List<Widget> children,
     bool startExpanded = false,
   })  : this.children = children,
         this.startExpanded = startExpanded,
         super(
           key: key,
-          child: TreeViewData(
+          child: _TreeViewData(
             children: children,
           ),
         );
@@ -35,10 +35,10 @@ class TreeView extends InheritedWidget {
   }
 }
 
-class TreeViewData extends StatelessWidget {
-  final List<TreeViewChild> children;
+class _TreeViewData extends StatelessWidget {
+  final List<Widget> children;
 
-  const TreeViewData({
+  const _TreeViewData({
     this.children,
   });
 
@@ -71,7 +71,7 @@ class TreeViewChild extends StatefulWidget {
   }
 
   @override
-  _TreeViewChildState createState() => _TreeViewChildState();
+  TreeViewChildState createState() => TreeViewChildState();
 
   TreeViewChild copyWith(
     TreeViewChild source, {
@@ -89,7 +89,7 @@ class TreeViewChild extends StatefulWidget {
   }
 }
 
-class _TreeViewChildState extends State<TreeViewChild> {
+class TreeViewChildState extends State<TreeViewChild> {
   bool isExpanded;
 
   @override
@@ -111,12 +111,7 @@ class _TreeViewChildState extends State<TreeViewChild> {
       children: <Widget>[
         GestureDetector(
           child: widget.parent,
-          onTap: widget.onTap ??
-              () {
-                setState(() {
-                  isExpanded = !isExpanded;
-                });
-              },
+          onTap: widget.onTap ?? () => toggleExpanded(),
         ),
         AnimatedContainer(
           duration: Duration(milliseconds: 400),
@@ -129,5 +124,11 @@ class _TreeViewChildState extends State<TreeViewChild> {
         ),
       ],
     );
+  }
+
+  void toggleExpanded() {
+    setState(() {
+      this.isExpanded = !this.isExpanded;
+    });
   }
 }

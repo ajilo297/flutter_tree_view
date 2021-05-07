@@ -11,7 +11,7 @@
 import 'package:meta/meta.dart';
 
 class Utils {
-  static String getFormattedDateTime({@required DateTime dateTime}) {
+  static String getFormattedDateTime({required DateTime dateTime}) {
     String day = '${dateTime.day}';
     String month = '${dateTime.month}';
     String year = '${dateTime.year}';

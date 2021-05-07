@@ -17,9 +17,9 @@ class MainApplication extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
+  HomePage({Key? key, this.title}) : super(key: key);
 
-  final String title;
+  final String? title;
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -126,17 +126,17 @@ class _HomePageState extends State<HomePage> {
     }).toList();
   }
 
-  Widget _getDocumentWidget({@required Document document}) => document.isFile
+  Widget _getDocumentWidget({required Document document}) => document.isFile
       ? _getFileWidget(document: document)
       : _getDirectoryWidget(document: document);
 
-  DirectoryWidget _getDirectoryWidget({@required Document document}) =>
+  DirectoryWidget _getDirectoryWidget({required Document document}) =>
       DirectoryWidget(
         directoryName: document.name,
         lastModified: document.dateModified,
       );
 
-  FileWidget _getFileWidget({@required Document document}) => FileWidget(
+  FileWidget _getFileWidget({required Document document}) => FileWidget(
         fileName: document.name,
         lastModified: document.dateModified,
       );

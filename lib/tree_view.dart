@@ -22,7 +22,7 @@ class TreeView extends InheritedWidget {
         );
 
   static TreeView of(BuildContext context) {
-    return context.inheritFromWidgetOfExactType(TreeView);
+    return context.dependOnInheritedWidgetOfExactType<TreeView>();
   }
 
   @override

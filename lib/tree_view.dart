@@ -1,6 +1,7 @@
 /// Tree view widget library
 library tree_view;
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -86,7 +87,8 @@ class TreeViewChild extends StatefulWidget {
   }
 }
 
-class TreeViewChildState extends State<TreeViewChild> {
+class TreeViewChildState extends State<TreeViewChild>
+    with SingleTickerProviderStateMixin {
   bool? isExpanded;
 
   @override
@@ -106,11 +108,21 @@ class TreeViewChildState extends State<TreeViewChild> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        GestureDetector(
+        RawGestureDetector(
+          gestures: {
+            AllowMultipleGestureRecognizer:
+                GestureRecognizerFactoryWithHandlers<
+                        AllowMultipleGestureRecognizer>(
+                    () => AllowMultipleGestureRecognizer(),
+                    (AllowMultipleGestureRecognizer instance) {
+              instance.onTap = widget.onTap ?? () => toggleExpanded();
+            }),
+          },
           child: widget.parent,
-          onTap: widget.onTap ?? () => toggleExpanded(),
         ),
-        AnimatedContainer(
+        AnimatedSize(
+          vsync: this,
+          curve: Curves.easeIn,
           duration: Duration(milliseconds: 400),
           child: isExpanded!
               ? Column(
@@ -127,5 +139,12 @@ class TreeViewChildState extends State<TreeViewChild> {
     setState(() {
       this.isExpanded = !this.isExpanded!;
     });
+  }
+}
+
+class AllowMultipleGestureRecognizer extends TapGestureRecognizer {
+  @override
+  void rejectGesture(int pointer) {
+    acceptGesture(pointer);
   }
 }

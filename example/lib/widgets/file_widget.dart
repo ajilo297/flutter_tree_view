@@ -31,6 +31,7 @@ class FileWidget extends StatelessWidget {
         leading: fileIcon,
         title: fileNameWidget,
         subtitle: lastModifiedWidget,
+        onTap: (()=> print(fileName)),
       ),
     );
   }

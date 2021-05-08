@@ -42,6 +42,7 @@ class DirectoryWidget extends StatelessWidget {
         title: titleWidget,
         subtitle: lastModifiedWidget,
         trailing: expandButton,
+        onTap: (()=> print(directoryName)),
       ),
     );
   }

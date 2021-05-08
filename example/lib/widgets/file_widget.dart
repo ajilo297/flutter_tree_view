@@ -15,7 +15,7 @@ class FileWidget extends StatelessWidget {
   final String fileName;
   final DateTime lastModified;
 
-  FileWidget({@required this.fileName, @required this.lastModified});
+  FileWidget({required this.fileName, required this.lastModified});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +31,7 @@ class FileWidget extends StatelessWidget {
         leading: fileIcon,
         title: fileNameWidget,
         subtitle: lastModifiedWidget,
+        onTap: (()=> print(fileName)),
       ),
     );
   }

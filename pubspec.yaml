@@ -5,7 +5,7 @@ author: Ajil Oommen <ajilo297@gmail.com>
 homepage: https://github.com/ajilo297/flutter_tree_view
 
 environment:
-  sdk: ">=2.2.2 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:

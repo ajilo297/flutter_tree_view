@@ -16,8 +16,8 @@ class Document {
   final List<Document> childData;
 
   Document({
-    @required this.name,
-    @required this.dateModified,
+    required this.name,
+    required this.dateModified,
     this.isFile = false,
     this.childData = const <Document>[],
   });

@@ -14,11 +14,11 @@ import 'package:example/utils/utils.dart';
 class DirectoryWidget extends StatelessWidget {
   final String directoryName;
   final DateTime lastModified;
-  final VoidCallback onPressedNext;
+  final VoidCallback? onPressedNext;
 
   DirectoryWidget({
-    @required this.directoryName,
-    @required this.lastModified,
+    required this.directoryName,
+    required this.lastModified,
     this.onPressedNext,
   });
 
@@ -42,6 +42,7 @@ class DirectoryWidget extends StatelessWidget {
         title: titleWidget,
         subtitle: lastModifiedWidget,
         trailing: expandButton,
+        onTap: (()=> print(directoryName)),
       ),
     );
   }
